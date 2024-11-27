@@ -62,3 +62,12 @@ class TestIntelligentOffice(unittest.TestCase):
         io.manage_light_level()
         mock_led.assert_called_with(io.LED_PIN, GPIO.HIGH)
         self.assertTrue(io.light_on)
+
+    @patch.object(VEML7700, "lux", new_callable=PropertyMock)
+    @patch.object(GPIO, "output") #led
+    def test_led_is_turned_off_when_light_is_higher_than_550(self, mock_led: Mock, mock_lux: Mock):
+        mock_lux.return_value = 551
+        io = IntelligentOffice()
+        io.manage_light_level()
+        mock_led.assert_called_with(io.LED_PIN, GPIO.LOW)
+        self.assertFalse(io.light_on)
