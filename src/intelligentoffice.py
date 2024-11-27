@@ -71,6 +71,9 @@ class IntelligentOffice:
         if light < 500:
             GPIO.output(self.LED_PIN, GPIO.HIGH)
             self.light_on = True
+        elif light > 550:
+            GPIO.output(self.LED_PIN, GPIO.LOW)
+            self.light_on = False
 
     def monitor_air_quality(self) -> None:
         # To be implemented
