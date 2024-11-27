@@ -85,6 +85,7 @@ class TestIntelligentOffice(unittest.TestCase):
         mock_led.assert_called_with(io.LED_PIN, GPIO.LOW)
         self.assertFalse(io.light_on)
 
+    # Test the buzzer is turned on when the air quality is bad
     @patch.object(GPIO, "input") #smoke sensor
     @patch.object(GPIO, "output") #buzzer
     def test_buzzer_is_turned_on_when_air_quality_is_bad(self, mock_smoke: Mock, mock_buzzer: Mock):

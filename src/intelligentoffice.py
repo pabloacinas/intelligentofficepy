@@ -80,9 +80,7 @@ class IntelligentOffice:
                 self.light_on = False
 
     def monitor_air_quality(self) -> None:
-        # To be implemented
         pass
-
     def change_servo_angle(self, duty_cycle):
         """
         Changes the servo motor's angle by passing it the corresponding PWM duty cycle
