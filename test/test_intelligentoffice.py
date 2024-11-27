@@ -56,7 +56,9 @@ class TestIntelligentOffice(unittest.TestCase):
 
     @patch.object(VEML7700, "lux", new_callable=PropertyMock)
     @patch.object(GPIO, "output") #led
-    def test_led_is_turned_on_when_light_is_lower_than_500(self, mock_led: Mock, mock_lux: Mock):
+    @patch.object(GPIO, "input") #infrared
+    def test_led_is_turned_on_when_light_is_lower_than_500(self,mock_infrared: Mock, mock_led: Mock, mock_lux: Mock):
+        mock_infrared.return_value = True
         mock_lux.return_value = 499
         io = IntelligentOffice()
         io.manage_light_level()
@@ -65,20 +67,21 @@ class TestIntelligentOffice(unittest.TestCase):
 
     @patch.object(VEML7700, "lux", new_callable=PropertyMock)
     @patch.object(GPIO, "output") #led
-    def test_led_is_turned_off_when_light_is_higher_than_550(self, mock_led: Mock, mock_lux: Mock):
+    @patch.object(GPIO, "input") #infrared
+    def test_led_is_turned_off_when_light_is_higher_than_550(self,mock_infrared: Mock, mock_led: Mock, mock_lux: Mock):
+        mock_infrared.return_value = True
         mock_lux.return_value = 551
         io = IntelligentOffice()
         io.manage_light_level()
         mock_led.assert_called_with(io.LED_PIN, GPIO.LOW)
         self.assertFalse(io.light_on)
 
-    @patch.object(VEML7700, "lux", new_callable=PropertyMock)
     @patch.object(GPIO, "output") #led
-    @patch.object(GPIO, "intput")  # infrared
-    def test_stop_manage_light_level_when_the_room_1_is_not_occupied(self, mock_infrared: Mock, mock_led: Mock, mock_lux: Mock):
+    @patch.object(GPIO, "input") #infrared
+    def test_led_is_turned_off_when_office_is_not_occupied(self, mock_infrared: Mock, mock_led: Mock):
         mock_infrared.return_value = False
         io = IntelligentOffice()
         io.manage_light_level()
-        io.check_quadrant_occupancy(io.INFRARED_PIN1)
         mock_led.assert_called_with(io.LED_PIN, GPIO.LOW)
         self.assertFalse(io.light_on)
+
