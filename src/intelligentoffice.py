@@ -58,8 +58,13 @@ class IntelligentOffice:
 
 
     def manage_blinds_based_on_time(self) -> None:
-        # To be implemented
-        pass
+        current_time = self.rtc.read_datetime()
+        if current_time.weekday() < 5 and current_time.hour == 8: # Monday to Friday at 8:00
+            self.change_servo_angle((180 / 18) + 2)
+            self.blinds_open = True
+        elif current_time.weekday() < 5 and current_time.hour == 20:# Monday to Friday at 20:00
+            self.change_servo_angle((0 / 18) + 2)
+            self.blinds_open = False
 
     def manage_light_level(self) -> None:
         # To be implemented
