@@ -71,3 +71,14 @@ class TestIntelligentOffice(unittest.TestCase):
         io.manage_light_level()
         mock_led.assert_called_with(io.LED_PIN, GPIO.LOW)
         self.assertFalse(io.light_on)
+
+    @patch.object(VEML7700, "lux", new_callable=PropertyMock)
+    @patch.object(GPIO, "output") #led
+    @patch.object(GPIO, "intput")  # infrared
+    def test_stop_manage_light_level_when_the_room_1_is_not_occupied(self, mock_infrared: Mock, mock_led: Mock, mock_lux: Mock):
+        mock_infrared.return_value = False
+        io = IntelligentOffice()
+        io.manage_light_level()
+        io.check_quadrant_occupancy(io.INFRARED_PIN1)
+        mock_led.assert_called_with(io.LED_PIN, GPIO.LOW)
+        self.assertFalse(io.light_on)
