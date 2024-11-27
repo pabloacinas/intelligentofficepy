@@ -54,7 +54,7 @@ class TestIntelligentOffice(unittest.TestCase):
         io.manage_blinds_based_on_time()
         self.assertFalse(io.blinds_open)
 
-    @patch.object(VEML7700, "lux")
+    @patch.object(VEML7700, "lux", new_callable=PropertyMock)
     @patch.object(GPIO, "output") #led
     def test_led_is_turned_on_when_light_is_lower_than_500(self, mock_led: Mock, mock_lux: Mock):
         mock_lux.return_value = 499
