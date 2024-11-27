@@ -13,25 +13,25 @@ class TestIntelligentOffice(unittest.TestCase):
     def test_check_cuadrant_1_is_occupied(self, mock_infrared: Mock):
         mock_infrared.return_value = True
         io = IntelligentOffice()
-        self.assertTrue(io.check_quadrant_occupancy(11))
+        self.assertTrue(io.check_quadrant_occupancy(io.INFRARED_PIN1))
 
     @patch.object(GPIO, "input")
     def test_check_cuadrant_2_is_occupied(self, mock_infrared: Mock):
         mock_infrared.return_value = True
         io = IntelligentOffice()
-        self.assertTrue(io.check_quadrant_occupancy(12))
+        self.assertTrue(io.check_quadrant_occupancy(io.INFRARED_PIN2))
 
     @patch.object(GPIO, "input")
     def test_check_cuadrant_3_is_occupied(self, mock_infrared: Mock):
         mock_infrared.return_value = True
         io = IntelligentOffice()
-        self.assertTrue(io.check_quadrant_occupancy(13))
+        self.assertTrue(io.check_quadrant_occupancy(io.INFRARED_PIN3))
 
     @patch.object(GPIO, "input")
     def test_check_cuadrant_4_is_occupied(self, mock_infrared: Mock):
         mock_infrared.return_value = True
         io = IntelligentOffice()
-        self.assertTrue(io.check_quadrant_occupancy(15))
+        self.assertTrue(io.check_quadrant_occupancy(io.INFRARED_PIN4))
 
     @patch.object(SDL_DS3231, "read_datetime")
     def test_open_blinds_at_8_am(self, mock_read_datetime: Mock):
