@@ -46,3 +46,10 @@ class TestIntelligentOffice(unittest.TestCase):
         io = IntelligentOffice()
         io.manage_blinds_based_on_time()
         self.assertFalse(io.blinds_open)
+
+    @patch.object(SDL_DS3231, "read_datetime")
+    def test_blinds_are_closed_on_weekend(self, mock_read_datetime: Mock):
+        mock_read_datetime.return_value = datetime(2024, 11, 30, 8, 0) #Saturday at 8:00
+        io = IntelligentOffice()
+        io.manage_blinds_based_on_time()
+        self.assertFalse(io.blinds_open)
