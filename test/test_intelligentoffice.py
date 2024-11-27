@@ -19,7 +19,25 @@ Note that the sensors have already been set up in the constructor of the Intelli
     """
 
     @patch.object(GPIO, "input")
-    def test_check_cuadrant_is_occupied(self, mock_infrared: Mock):
+    def test_check_cuadrant_1_is_occupied(self, mock_infrared: Mock):
         mock_infrared.return_value = True
         io = IntelligentOffice()
         self.assertTrue(io.check_quadrant_occupancy(11))
+
+    @patch.object(GPIO, "input")
+    def test_check_cuadrant_2_is_occupied(self, mock_infrared: Mock):
+        mock_infrared.return_value = True
+        io = IntelligentOffice()
+        self.assertTrue(io.check_quadrant_occupancy(12))
+
+    @patch.object(GPIO, "input")
+    def test_check_cuadrant_3_is_occupied(self, mock_infrared: Mock):
+        mock_infrared.return_value = True
+        io = IntelligentOffice()
+        self.assertTrue(io.check_quadrant_occupancy(13))
+
+    @patch.object(GPIO, "input")
+    def test_check_cuadrant_4_is_occupied(self, mock_infrared: Mock):
+        mock_infrared.return_value = True
+        io = IntelligentOffice()
+        self.assertTrue(io.check_quadrant_occupancy(15))
